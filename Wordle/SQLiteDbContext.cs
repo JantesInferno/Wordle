@@ -35,7 +35,7 @@ namespace Wordle
                 SQLite.SQLiteOpenFlags.Create |
                 SQLite.SQLiteOpenFlags.SharedCache;
 
-        private SQLiteConnection _conn;
+        private SQLiteAsyncConnection _conn;
 
 
         async Task Init()
@@ -45,10 +45,10 @@ namespace Wordle
                 return;
             }
 
-            _conn = new SQLiteConnection(DbPath);
-            _conn.CreateTable<Word>();
+            _conn = new SQLiteAsyncConnection(DbPath);
+            await _conn.CreateTableAsync<Word>();
 
-            var words = _conn.Table<Word>().ToList();
+            var words = await _conn.Table<Word>().ToListAsync();
             if (words == null || words.Count == 0)
             {
                 List<Word> list = new List<Word>
@@ -80,7 +80,7 @@ namespace Wordle
                     new Word("zebra")
                 };
 
-                list.ForEach(word => AddWord(word));
+                await AddWords(list);
             }
         }
 
@@ -88,7 +88,7 @@ namespace Wordle
         {
             await Init();
 
-            var result = _conn.Table<Word>().ToList();
+            var result = await _conn.Table<Word>().ToListAsync();
             var wotd = result.Where(x => !x.HasBeenPicked).FirstOrDefault();
             if (wotd != null)
             {
@@ -98,16 +98,13 @@ namespace Wordle
             return wotd!;
         }
 
-        public int AddWord(Word word)
+        public async Task<int> AddWords(List<Word> words)
         {
-            if (word.Id != 0)
+            if (words != null)
             {
-                return _conn.Update(word);
+                return await _conn.InsertAllAsync(words);
             }
-            else
-            {
-                return _conn.Insert(word);
-            }
+            return 0;
         }
     }
 }
