@@ -1,4 +1,6 @@
-﻿namespace Wordle
+﻿using Microsoft.Maui.Controls;
+
+namespace Wordle
 {
     public partial class AppShell : Shell
     {
