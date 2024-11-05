@@ -1,22 +1,34 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             x:Class="Wordle.MainPage">
+             x:Class="Wordle.MainPage"
+             Padding="20"
+             BackgroundColor="AntiqueWhite">
 
-    <ScrollView>
-        <VerticalStackLayout
-            Padding="30,0"
-            Spacing="25">
-            <Entry 
-                x:Name="TestEntry"
-                Text="Placeholder"
-                />
-            <Label 
-                x:Name="TestLabel"
-                Text="Placeholder"
-                FontSize="20"
-                />
-        </VerticalStackLayout>
-    </ScrollView>
+    <StackLayout HorizontalOptions="Center" VerticalOptions="Center">
+        <Grid x:Name="wordleGrid" RowSpacing="10" ColumnSpacing="10">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+            </Grid.RowDefinitions>
+
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto" />
+                <ColumnDefinition Width="Auto" />
+                <ColumnDefinition Width="Auto" />
+                <ColumnDefinition Width="Auto" />
+                <ColumnDefinition Width="Auto" />
+            </Grid.ColumnDefinitions>
+        </Grid>
+    </StackLayout>
+    <!--<Label 
+        x:Name="TestLabel"
+        Text="Placeholder"
+        FontSize="20"
+    />-->
 
 </ContentPage>

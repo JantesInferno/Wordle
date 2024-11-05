@@ -6,7 +6,7 @@ namespace Wordle
     {
         private SQLiteDbContext _context;
 
-        public static Word Word { get; private set; }
+        public static Word SecretWord { get; private set; }
 
         public App(SQLiteDbContext context)
         {
@@ -15,7 +15,7 @@ namespace Wordle
 
             Task.Run(async () =>
             {
-                Word = await _context.GetWordOfTheDay();
+                SecretWord = await _context.GetRandomWord();
             });
 
             MainPage = new AppShell();

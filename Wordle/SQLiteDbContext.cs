@@ -30,10 +30,10 @@ namespace Wordle
 
         static string DbPath => Path.Combine(FileSystem.AppDataDirectory, DbFileName);
 
-        const SQLite.SQLiteOpenFlags Flags =
-                SQLite.SQLiteOpenFlags.ReadWrite |
-                SQLite.SQLiteOpenFlags.Create |
-                SQLite.SQLiteOpenFlags.SharedCache;
+        //const SQLite.SQLiteOpenFlags Flags =
+        //        SQLite.SQLiteOpenFlags.ReadWrite |
+        //        SQLite.SQLiteOpenFlags.Create |
+        //        SQLite.SQLiteOpenFlags.SharedCache;
 
         private SQLiteAsyncConnection _conn;
 
@@ -84,18 +84,33 @@ namespace Wordle
             }
         }
 
-        public async Task<Word> GetWordOfTheDay()
+        public async Task<Word> GetRandomWord()
         {
             await Init();
 
             var result = await _conn.Table<Word>().ToListAsync();
-            var wotd = result.Where(x => !x.HasBeenPicked).FirstOrDefault();
-            if (wotd != null)
+
+            var unpickedWords = result.Where(x => !x.HasBeenPicked).ToList();
+
+            if (unpickedWords.Count == 0)
             {
-                wotd.HasBeenPicked = true;
+                foreach (var word in result)
+                {
+                    word.HasBeenPicked = false;
+                }
+
+                await _conn.UpdateAllAsync(result);
             }
 
-            return wotd!;
+            var random = new Random();
+            var randomIndex = random.Next(unpickedWords.Count);
+            var randomWord = unpickedWords[randomIndex];
+
+            randomWord.HasBeenPicked = true;
+            
+            await _conn.UpdateAsync(randomWord);
+
+            return randomWord;
         }
 
         public async Task<int> AddWords(List<Word> words)
