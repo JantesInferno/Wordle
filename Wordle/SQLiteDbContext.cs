@@ -30,11 +30,6 @@ namespace Wordle
 
         static string DbPath => Path.Combine(FileSystem.AppDataDirectory, DbFileName);
 
-        //const SQLite.SQLiteOpenFlags Flags =
-        //        SQLite.SQLiteOpenFlags.ReadWrite |
-        //        SQLite.SQLiteOpenFlags.Create |
-        //        SQLite.SQLiteOpenFlags.SharedCache;
-
         private SQLiteAsyncConnection _conn;
 
 

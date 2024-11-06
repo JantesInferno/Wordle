@@ -43,14 +43,14 @@ namespace Wordle
                         HorizontalTextAlignment = TextAlignment.Center,
                         VerticalTextAlignment = TextAlignment.Center,
                         MaxLength = 1,
-                        TextTransform = TextTransform.Uppercase
+                        TextTransform = TextTransform.Uppercase,
+                        TextColor = Colors.Black
                     };
 
                     frame.Content = entry;
 
                     entry.Completed += OnEntryCompleted;
                     entry.TextChanged += OnEntryTextChanged;
-                    //entry.Focused += OnEntryFocused;
 
                     Grid.SetRow(frame, row);
                     Grid.SetColumn(frame, col);
@@ -58,11 +58,6 @@ namespace Wordle
                 }
             }
         }
-
-        //private void OnEntryFocused(object sender, System.EventArgs e)
-        //{
-
-        //}
 
         private void OnEntryCompleted(object sender, System.EventArgs e)
         {
@@ -212,7 +207,7 @@ namespace Wordle
 
             if (guessedWord == App.SecretWord.Text)
             {
-                DisplayAlert("Submitted Word", $"Congratulations! Today's word was {App.SecretWord.Text}", "OK");
+                DisplayAlert("Result", $"Congratulations! Today's word was {App.SecretWord.Text}", "OK");
             }
             else
             {

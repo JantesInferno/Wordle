@@ -25,10 +25,5 @@
             </Grid.ColumnDefinitions>
         </Grid>
     </StackLayout>
-    <!--<Label 
-        x:Name="TestLabel"
-        Text="Placeholder"
-        FontSize="20"
-    />-->
 
 </ContentPage>
